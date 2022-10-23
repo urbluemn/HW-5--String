@@ -17,7 +17,7 @@ string[] wordsFromUser = userInput.Split('-', ',' , '.' , ' ', '_', ':', '\n', '
 bool menuRepeat = false;
 while (!menuRepeat)
 {
-    Console.WriteLine("\nSelect option: \n\t1.Find words with the maximum number of digits. \n\t2.Find the longest word and its amount in sentences. \n\t3.Change digits with words. \n\t4.View questionable and exclamation sentences. \n\t5.View sentences with no ','. \n\t6.Words that starts and ends with the same letter.");
+    Console.WriteLine("\nSelect option: \n\t1.Find words with the maximum number of digits. \n\t2.Find the longest word and its amount in sentences. \n\t3.Change digits with words. \n\t4.View questionable and exclamation sentences. \n\t5.View sentences with no ','. \n\t6.Words that starts and ends with the same letter. \n\t\t7.Quit.");
     string menuChoise = Console.ReadLine();
     switch (menuChoise)
     {
@@ -38,6 +38,9 @@ while (!menuRepeat)
             break;
         case "6":
             StartsEndsWith();
+            break;
+        case "7":
+            menuRepeat = true;
             break;
         default:
             Console.WriteLine("Please select the correct option!");
