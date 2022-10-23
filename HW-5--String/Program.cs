@@ -5,28 +5,91 @@
 ////- Найти самое длинное слово и определить, сколько раз оно встретилось в тексте.
 ////- Заменить цифры от 0 до 9 на слова «ноль», «один», …, «девять».
 ///- Вывести на экран сначала вопросительные, а затем восклицательные предложения.
-//- Вывести на экран только предложения, не содержащие запятых.
-//- Найти слова, начинающиеся и заканчивающиеся на одну и ту же букву.
+////- Вывести на экран только предложения, не содержащие запятых.
+////- Найти слова, начинающиеся и заканчивающиеся на одну и ту же букву.
 //4. Приложение не должно падать ни при каких условиях.
 
 
-Console.WriteLine("Enter text(letters, numbers and symbols required)");
+Console.WriteLine("Please enter your text(letters, numbers and symbols required)");
 string userInput = Console.ReadLine();
-string[] wordsFromUser = userInput.Split('\n', ',' , '.' , ' ', '\t', '\r');
+string[] wordsFromUser = userInput.Split('-', ',' , '.' , ' ', '_', ':', '\n', '\t', '\r');
 
-ExclamationQuestionableSentences();
+bool menuRepeat = false;
+while (!menuRepeat)
+{
+    Console.WriteLine("\nSelect option: \n\t1.Find words with the maximum number of digits. \n\t2.Find the longest word and its amount in sentences. \n\t3.Change digits with words. \n\t4.View questionable and exclamation sentences. \n\t5.View sentences with no ','. \n\t6.Words that starts and ends with the same letter.");
+    string menuChoise = Console.ReadLine();
+    switch (menuChoise)
+    {
+        case "1":
+            MaxDigitWord();
+            break;
+        case "2":
+            LongestWord();
+            break;
+        case "3":
+            AnotherUserInput();
+            break;
+        case "4":
+            ExclamationQuestionableSentences();
+            break;
+        case "5":
+            NonSeparatedSentences();
+            break;
+        case "6":
+            StartsEndsWith();
+            break;
+        default:
+            Console.WriteLine("Please select the correct option!");
+            continue;
+    }
+}
 
+void StartsEndsWith()
+{
+    int countWords = 0;
+    Console.WriteLine("Words that starts and ends with the same letter: \n");
+    foreach(var word in wordsFromUser)
+    {
+        if(word.Length > 1 && word[0] == word[word.Length-1])
+        {
+            Console.Write($"\t{word}\t");
+            countWords++;
+        }
+        else if(countWords == 0)
+            Console.WriteLine("No such words!");
+    }
+}
 void NonSeparatedSentences()
 {
-    string[] NonSeparatedSenteces = userInput.Split(new[] { '!', '.', '?', '\n' }, StringSplitOptions.None);
+    string[] NonSeparatedSenteces = userInput.Split(new[] { '!', '.', '?', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+    Console.WriteLine("Sentences which are not containig ',': \n");
+    int SetntWithOutSep = 0;
+    for (int i = 0; i < NonSeparatedSenteces.Length; i++)
+    {
+        
+        if (!NonSeparatedSenteces[i].Contains(','))
+        {
+            Console.WriteLine(NonSeparatedSenteces[i]);
+            SetntWithOutSep++;
+        }      
+        if (SetntWithOutSep == 0)
+        {
+            Console.WriteLine("No such sentences!");
+        }
+    }
+    
+
+        
 }
 void ExclamationQuestionableSentences()
 {
     string[] QuestionableStringSeparator = { ". ", "\n", "! " };
     string[] ExclamationStringSeparator = { ". ", "\n", "? " };
-    string[] QuestionableSenteces = userInput.Split(QuestionableStringSeparator, StringSplitOptions.None);
-    string[] ExclamationSenteces = userInput.Split(ExclamationStringSeparator, StringSplitOptions.None);
-    Console.WriteLine("Questionable senteces:");
+    string[] QuestionableSenteces = userInput.Split(QuestionableStringSeparator, StringSplitOptions.RemoveEmptyEntries);
+    string[] ExclamationSenteces = userInput.Split(ExclamationStringSeparator, StringSplitOptions.RemoveEmptyEntries);
+    Console.WriteLine();
+    Console.WriteLine("Questionable senteces: \n");
     for (int i = 0; i < QuestionableSenteces.Length; i++)
     {
         if (QuestionableSenteces[i].Contains('?'))
@@ -35,7 +98,7 @@ void ExclamationQuestionableSentences()
             Console.WriteLine( QuestionableSenteces[i]);
         }
     }
-    Console.WriteLine("Exclamation senteces:");
+    Console.WriteLine("Exclamation senteces: \n");
     for (int i = 0; i < ExclamationSenteces.Length; i++)
     {
 
